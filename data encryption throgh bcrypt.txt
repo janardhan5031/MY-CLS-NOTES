@@ -74,6 +74,38 @@ How to ecrpyt the data =>{
             string :- value we want to hash
             salt_value :- generated salt value (string) to add more secure tourity layer
             cd  :- function that handles err and final hashed value .
+
+        3. bcrypt.compare(password,password_stored_in_database,cd)      =>{
+
+            password                     <= user send his password as in request
+            password_stored_in_database  <= password_stored_in_database
+            cd   <= function which handels the error and success on comparison of password
+        }
+
+        when sign in , give a token to the user 
+            
+            -> install jsonwebtoke
+            ->import that module where you want into a variable (jwt)
+            
+            -> jwt.sign(payload,secrete_key,{expiresIn:'1800s'})
+
+                    payload-> object that contains user's detalis like(id,student:false,premium:true,...)
+                    secrete_key -> key we stored in .env file we can access it via {  process.env.VARIABLE_NAME_IN_.ENV FILE}
+
+                                    we can create this key with node by this command in our terminal
+
+                                        require('crypto').randomBytes(64).toString('hex')            
+
+                    {expiresIn} -> optional, time period states how long this token will be valid
+
+
+            -> verifying the token 
+                    jwt.verify( token_send_by_user, secrete_key stored in .env file , (err, user_payload))
+
+                        cb -> handles error while verifyingtoken and 
+                              returns palyload in the token {object}
+
+
     }
 
 }
